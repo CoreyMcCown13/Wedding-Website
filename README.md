@@ -21,3 +21,8 @@ This project is designed to allow invited guests to easily accept the invitation
 
 ## Content
 Include information about each member of the bride and groom party. Include map to location of wedding/reception. Include registry information to all registries. Provide background information to about the bride and groom.
+### Cookies
+Cookies are used to store session information on the McCown Wedding website. Cookies include:
+- McCownUser: Used to store the username of an administrator
+- McCownPass: Used to store the password of an administrator. Passwords are salted and hashed.
+- McCownID: Used to store the unique ID of a guest. This will be used to assist the guest with logging back in to the RSVP portion.
