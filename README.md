@@ -1,7 +1,7 @@
 # McCown Wedding Website
 This project is designed to allow invited guests to easily accept the invitation to our wedding and manage their requests. It is designed from the ground up by myself and my fiance. The website is coded entirely JavaScript/JQuery, PHP and MySQL.
 
-# Features
+## Features
 ### Fully responsive design
 - Responsive design for all screen sizes
 - Collapsable "hamburger" menu upon mobile detection
@@ -19,5 +19,5 @@ This project is designed to allow invited guests to easily accept the invitation
 - Allow easy removal of guest invitation
 - Allow exporting of songs requests, guests invited, and guests who have confirmed their attendance to a CSV file
 
-# Content
+## Content
 Include information about each member of the bride and groom party. Include map to location of wedding/reception. Include registry information to all registries. Provide background information to about the bride and groom.
