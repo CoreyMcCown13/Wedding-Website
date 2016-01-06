@@ -1,6 +1,8 @@
 # McCown Wedding Website
 This project is designed to allow invited guests to easily accept the invitation to our wedding and manage their requests. It is designed from the ground up by myself and my fiance. The website is coded entirely JavaScript/JQuery, PHP and MySQL.
 
+[Visit the McCown Wedding website](http://wedding.coreymccown.com)
+
 ## Features
 ### Fully responsive design
 - Responsive design for all screen sizes
