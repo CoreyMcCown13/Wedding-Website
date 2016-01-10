@@ -1,6 +1,8 @@
 # McCown Wedding Website
 This project is designed to allow invited guests to easily accept the invitation to our wedding and manage their requests. It is designed from the ground up by myself and my fiance. The website is coded entirely JavaScript/JQuery, PHP and MySQL.
 
+I will be including all of the primary functionality of the website. The main content that will be left out is simple HTML pages, which mainly include text and images.
+
 [Visit the McCown Wedding website](http://wedding.coreymccown.com)
 
 ## Features
@@ -28,3 +30,11 @@ Cookies are used to store session information on the McCown Wedding website. Coo
 - McCownUser: Used to store the username of an administrator
 - McCownPass: Used to store the password of an administrator. Passwords are salted and hashed.
 - McCownID: Used to store the unique ID of a guest. This will be used to assist the guest with logging back in to the RSVP portion.
+
+## In progress
+The following is still in progress/needs finalized
+- Responsive design. Primarily need to make adjustments for mobile devices with low resolution screens. Adjustments include margin and font tweaking.
+- Fix slideshow on "Our Story." Slideshow loads properly once, but if you leave the page and come back it will fail to load.
+- Preload all images and display loading bar.
+- Code optimization. rsvp.php primarily needs optimized.
+- Finish the actual content of the pages.
