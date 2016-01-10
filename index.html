@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>McCown Wedding</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="js/css/unslider.css" />
+    <link href="/js/jquery.bxslider.css" rel="stylesheet" />
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="/js/jquery.tablesorter.js"></script> 
+    <script src="/js/jquery.bxslider.min.js"></script>
+	<script>
+		var menuSnapPoint = 1010;
+		var mobileSnapPoint = 980;
+		var currentPage = "";
+			
+		function setCookie(cname, cvalue, exdays) {
+			var d = new Date();
+			d.setTime(d.getTime() + (exdays*24*60*60*1000));
+			var expires = "expires="+d.toUTCString();
+			document.cookie = cname + "=" + cvalue + "; " + expires;
+		}
+		
+		function readCookie(name) {
+			var nameEQ = name + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0;i < ca.length;i++) {
+			var c = ca[i];
+			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+				if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			}
+			return null;
+		}
+		
+		function eraseCookie(name) {
+			setCookie(name, "", -1);
+		}
+		
+		function deleteCookies() {
+			eraseCookie("McCownUser");
+			eraseCookie("McCownPass");
+			eraseCookie("McCownID");	
+		}
+		
+		function appendMenu(){
+			if($(window).width() <= mobileSnapPoint || $(window).width() <= menuSnapPoint)
+			{
+				$("#hashtagMenu").show();
+				//Fixes inline-block style
+				$('#hashtagMenu').css('display', '');
+			}
+			else
+				$("#hashtagMenu").hide();
+		}
+		
+		function isLandscape() {
+			return window.innerHeight > window.innerWidth;	
+		}
+		
+		function switchPage(destination) {
+			if(currentPage != destination)
+			{
+				var destinationUrl = "/pages/" + destination;
+				$.ajax({
+					type: 'HEAD',
+					url: destinationUrl,
+					success: function() {
+						currentPage = destination;
+						if($(window).width() <= mobileSnapPoint)
+							if($("#nav-menu").is(":visible"))
+								$("#nav-menu").fadeOut("fast");
+						
+						$('#content').fadeOut("fast", function(){
+							$.get(destinationUrl, function (data) {
+								$("#content").empty();
+								$("#content").append(data);
+								$('#content').fadeIn("fast");
+							});
+						});	
+					},
+					error: function() {
+						$("#content").load( "pages/home_page.html", function() {});
+					}
+				});
+			} else console.log("Note: Same page as current, skipping navigation");
+		}
+		
+		function forceSwitchPage(destination) {
+			currentPage = destination;
+			if($(window).width() <= mobileSnapPoint)
+				if($("#nav-menu").is(":visible"))
+					$("#nav-menu").fadeOut("fast");
+			
+			var destinationUrl = "/pages/" + destination;
+			$('#content').fadeOut("fast", function(){
+				$.get(destinationUrl, function (data) {
+					$("#content").empty();
+					$("#content").append(data);
+					$('#content').fadeIn("fast");
+				});
+			});	
+		}
+		
+		$(document).ready(function(){
+			appendMenu();
+			
+			//Load homepage
+			$("#content").load( "pages/home_page.html", function() {});
+			
+			$("#menu-toggle").click(function(){
+				if($("#nav-menu").is(":visible")){
+					$("#nav-menu").fadeOut("fast");
+				} else {
+					$("#nav-menu").slideDown("fast");
+				}
+			});
+			
+			if($(window).width() <= mobileSnapPoint)
+				$("#nav-menu").hide();
+				
+			if(window.location.hash) {
+				var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+				if(hash != "home")
+					switchPage(hash + "_page.html");
+			}
+		});
+		
+		//Check how responsive should react on scaling
+		$(window).resize(function() {
+			appendMenu();
+			/* BROKEN LOGIC - Small navbar deadzone of approximately 5 pixels around 980-985 width on desktop. Should not affect many users, but needs fixed. */
+		  	if($(window).width() <= mobileSnapPoint)
+				$("#nav-menu").hide();
+			else 
+				$("#nav-menu").show();
+		});
+		
+		//Detect document click
+		//This is for collapsing menu
+		$(document).click(function(e){
+			//Check if menu closure script needs ran (mobile)
+			if($(window).width() <= mobileSnapPoint)
+				//Check if click was on menu or menu toggle button, if so ignore it
+				if((($(e.target).closest("#nav-menu").length > 0) || $(e.target).closest("#menu-toggle").length > 0)) {
+					return false;
+				//Close menu
+				} else {
+					if($("#nav-menu").is(":visible"))
+						$("#nav-menu").fadeOut("fast");
+				}
+		});
+		
+		$.preloadImages = function() {
+			for (var i = 0; i < arguments.length; i++) {
+				$("<img />").attr("src", arguments[i]);
+			}
+		}
+    </script>
+</head>
+
+<body>
+    <header>
+        <div class="nav">
+        	<div class="header-left">
+            	McCown Wedding
+        	</div>
+        	<div class="header-right">
+            	#MeetTheMcCowns
+        	</div>
+        	<div class="header-menu-icon">
+            	<a href="#" id="menu-toggle">
+                &nbsp;&nbsp;
+                <img src="images/menu-icon.png" alt="Menu">
+                &nbsp;&nbsp;
+            	</a>
+        	</div>
+        	<ul id="nav-menu">
+            	<li><a href="#home" onclick="switchPage('home_page.html')">Home</a></li>
+            	<li><a href="#rsvp" onclick="switchPage('rsvp_page.html')">RSVP</a></li>
+            	<li><a href="#story" onclick="switchPage('story_page.html')">Our Story</a></li>
+            	<li><a href="#housekeeping" onclick="switchPage('housekeeping_page.html')">Housekeeping</a></li>
+            	<li><a href="#bridesmaids" onclick="switchPage('bridesmaids_page.html')">Meet the Maids</a></li>
+            	<li><a href="#groomsmen" onclick="switchPage('groomsmen_page.html')">Greet the Groomsmen</a></li>
+                <li id="hashtagMenu"><a href="#">#MeetTheMcCowns</a></li>
+        	</ul>
+        <!-- end .nav -->
+        </div>
+    </header>
+    <div class="container">
+    	<div class="content" id="content">
+
+        </div>
+    </div>
+</body>
+</html>
