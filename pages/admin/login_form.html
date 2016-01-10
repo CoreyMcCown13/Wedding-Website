@@ -1,0 +1,44 @@
+<form action="pages/admin/login.php" method="post" id="login">
+        <table width="50%" style="text-align:center;" border="0">
+          <tbody>
+            <tr>
+              <td><input type="text" name="username" placeholder="Username" id="username"></td>
+            </tr>
+            <tr>
+              <td><input type="password" name="password" placeholder="Password" id="password"></td>
+            </tr>
+            <tr>
+              <td><input type="submit" value="Submit"></td>
+            </tr>
+          </tbody>
+        </table>
+</form>
+<script>
+$( "#login" ).submit(function( event ) {
+		var user = $( "#username" ).val();
+		var pass = $( "#password" ).val();
+		$( "#admin_content" ).hide();
+		$( "#admin_content" ).empty().append( "Logging in..." );
+		$( "#admin_content" ).fadeIn("fast");
+		// Stop form from submitting
+		event.preventDefault();
+		
+		// Get the url and id
+		var $form = $( this ),
+		
+		url = $form.attr( "action" );
+		
+		// Send the data using post
+		var posting = $.post( 
+			url, 
+			{ username : user, password : pass } 
+		);
+		
+		// Put the results in a div
+		posting.done(function( data ) {
+			$( "#admin_content" ).empty().append( data );
+			//$( "#rsvp_landing" ).fadeOut("fast");
+			$( "#admin_content" ).fadeIn("fast");
+		});
+});
+</script>
